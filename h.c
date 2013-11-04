@@ -6,12 +6,22 @@ union{
 struct Dict{
  void * val;
 }dict[L];
+
+struct DictM{
+ int key;
+ void * val;
+}dictm[L];
 int hash(int key,int length){
   u.i=key;
   u.i=u.i&0x3f7fffff;
   u.i=u.i|0x3f000000;
-  
   return u.f*length;
+}
+
+int dictm_store(struct DictM *d,int(*h)(int,int),int key,void * val,int len){
+  int k = h(key,len);
+  d[k].val=val;
+  d[k].key=key;
 }
 int dict_store(struct Dict *d,int(*h)(int,int),int key,void * val,int len){
    d[h(key,len)].val=val;
