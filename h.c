@@ -47,7 +47,7 @@ int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len){
   }else{
     ll *v=malloc(sizeof(struct ll));
     v->val=val;
-    v->next=0;
+    v->next=el->next;
     el->val=v;
     el->next=v;
     //d[k].val=
