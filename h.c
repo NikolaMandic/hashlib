@@ -7,10 +7,16 @@ struct Dict{
  void * val;
 }dict[L];
 
-struct DictM{
+typedef struct DictM{
  int key;
  void * val;
-}dictm[L];
+}DictM;
+
+typedef struct DictMLL{
+ int key;
+ void * val;
+ void * next;
+}DictMLL;
 int hash(int key,int length){
   u.i=key;
   u.i=u.i&0x3f7fffff;
@@ -26,7 +32,29 @@ int dictm_store(struct DictM *d,int(*h)(int,int),int key,void * val,int len){
 int dict_store(struct Dict *d,int(*h)(int,int),int key,void * val,int len){
    d[h(key,len)].val=val;
 }
-int main(){
+
+typedef struct ll ll;
+typedef struct ll{
+  void *val;
+  ll * next;
+}ll;
+int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len){
+  int k = h(key,len);
+  DictMLL * el= d+k;
+  if(el->key==0){
+    el->val=val;
+    el->key=key;
+  }else{
+    ll *v=malloc(sizeof(struct ll));
+    v->val=val;
+    v->next=0;
+    el->val=v;
+    el->next=v;
+    //d[k].val=
+  }
+}
+
+void d(){
   int p=5;
   int i=0;
   printf("%p %d\n",&p,hash((int)&p,L));
@@ -36,4 +64,10 @@ int main(){
     printf("%d = %p\n",i,dict[i].val);
     i++;
   }
+}
+int main(){
+  ll *l;
+  l->val=4;
+  printf("%p\n",l->val);
+
 }
