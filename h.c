@@ -65,9 +65,37 @@ void d(){
     i++;
   }
 }
+void printLL(ll * l){
+  ll *n = l;
+  printf("-%p",n->val);
+  while(n=n->next){
+    printf("-%p",n->val);
+  }
+  printf("\n");
+}
 int main(){
+  /*
   ll *l;
   l->val=4;
   printf("%p\n",l->val);
+  */
+  DictMLL d[100];
+  int key;
+  void * val=&key;
+  int i=0;
+  memset(d,0,sizeof(DictMLL)*100);
+  dict_storell(d,hash,key,val,100);
 
+  dict_storell(d,hash,key,val+1,100);
+  
+  while(i<100){
+    ll * l;
+    printf("\n");
+    printf("%d = %p",i,d[i].val);
+    if(l=d[i].next){
+      printLL(l); 
+    }
+    i++;
+  }
+  printf("\n");
 }
