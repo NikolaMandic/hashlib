@@ -36,6 +36,7 @@ int dict_store(struct Dict *d,int(*h)(int,int),int key,void * val,int len){
 typedef struct ll ll;
 typedef struct ll{
   void *val;
+  int key;
   ll * next;
 }ll;
 int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len){
@@ -46,6 +47,7 @@ int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len){
     el->key=key;
   }else{
     ll *v=malloc(sizeof(struct ll));
+    v->key=key;
     v->val=val;
     v->next=el->next;
     el->val=v;
@@ -53,7 +55,22 @@ int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len){
     //d[k].val=
   }
 }
+void * dict_getll(struct DictMLL *d,int(*h)(int,int),int key,int len){
+  int k = h(key,len);
+  DictMLL * el= d+k;
+  if(el->key==0) return 0;
 
+  if(el->key==key){
+    return el->val;
+  }else{
+    ll *v = el->next;
+   
+    while(v && v->key!=key){
+      v=v->next;
+    }
+    if (v) return v->val;
+  }
+}
 void d(){
   int p=5;
   int i=0;
@@ -86,8 +103,11 @@ int main(){
   memset(d,0,sizeof(DictMLL)*100);
   dict_storell(d,hash,key,val,100);
 
-  dict_storell(d,hash,key,val+1,100);
-  
+  dict_storell(d,hash,key|0x80000000,val+1,100);
+
+  void * v1 = dict_getll(d,hash,key|0x80000000,100);
+  void * v2 = dict_getll(d,hash,key,100);
+  printf("key=%p|val=%p\nkey=%p|val=%p\n",key|0x80000000,v1,key,v2); 
   while(i<100){
     ll * l;
     printf("\n");
