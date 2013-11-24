@@ -1,44 +1,20 @@
-union{
-  float f;
-  int i;
-}u;
-#define L 100
-struct Dict{
- void * val;
-}dict[L];
+#include <hashlib.h>
 
-typedef struct DictM{
- int key;
- void * val;
-}DictM;
-
-typedef struct DictMLL{
- int key;
- void * val;
- void * next;
-}DictMLL;
 int hash(int key,int length){
   u.i=key;
   u.i=u.i&0x3f7fffff;
   u.i=u.i|0x3f000000;
   return u.f*length;
 }
-
-int dictm_store(struct DictM *d,int(*h)(int,int),int key,void * val,int len){
+int dictm_store(DictM *d,int(*h)(int,int),int key,void * val,int len){
   int k = h(key,len);
   d[k].val=val;
   d[k].key=key;
 }
-int dict_store(struct Dict *d,int(*h)(int,int),int key,void * val,int len){
+int dict_store(Dict *d,int(*h)(int,int),int key,void * val,int len){
    d[h(key,len)].val=val;
 }
 
-typedef struct ll ll;
-typedef struct ll{
-  void *val;
-  int key;
-  ll * next;
-}ll;
 int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len){
   int k = h(key,len);
   DictMLL * el= d+k;
@@ -90,12 +66,8 @@ void printLL(ll * l){
   }
   printf("\n");
 }
+/*
 int main(){
-  /*
-  ll *l;
-  l->val=4;
-  printf("%p\n",l->val);
-  */
   DictMLL d[100];
   int key;
   void * val=&key;
@@ -118,4 +90,4 @@ int main(){
     i++;
   }
   printf("\n");
-}
+}*/
