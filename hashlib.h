@@ -18,14 +18,16 @@ typedef struct DictMLL{
  void * next;
 }DictMLL;
 
-int hash(int key,int length)
-int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len)
-void * dict_getll(struct DictMLL *d,int(*h)(int,int),int key,int len)
+int hash(int key,int length);
+int dict_storell(DictMLL *d,int(*h)(int,int),int key,void * val,int len);
+void * dict_getll(DictMLL *d,int(*h)(int,int),int key,int len);
 
-int dict_store(Dict *d,int(*h)(int,int),int key,void * val,int len)
-int dictm_store(DictM *d,int(*h)(int,int),int key,void * val,int len)
-int dict_storell(struct DictMLL *d,int(*h)(int,int),int key,void * val,int len)
-
+int dict_store(Dict *d,int(*h)(int,int),int key,void * val,int len);
+int dict_get(Dict *d,int(*h)(int,int),int key,int len);
+int dictm_store(DictM *d,int(*h)(int,int),int key,void * val,int len);
+//store element in dictll
+int dict_storell( DictMLL *d,int(*h)(int,int),int key,void * val,int len);
+void * dict_getll( DictMLL *d,int(*h)(int,int),int key,int len);
 typedef struct ll ll;
 typedef struct ll{
   void *val;
